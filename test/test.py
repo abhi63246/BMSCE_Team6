@@ -10,11 +10,11 @@ from cocotb.triggers import ClockCycles
 async def test_project(dut):
     dut._log.info("Start")
 
-    # Clock at 100 kHz (10 us period)
+    # Set the clock period to 10 us (100 KHz)
     clock = Clock(dut.clk, 10, units="us")
     cocotb.start_soon(clock.start())
 
-    # Apply reset
+    # Reset
     dut._log.info("Reset")
     dut.ena.value = 1
     dut.ui_in.value = 0
@@ -22,16 +22,14 @@ async def test_project(dut):
     dut.rst_n.value = 0
     await ClockCycles(dut.clk, 5)
     dut.rst_n.value = 1
-    await ClockCycles(dut.clk, 1)  # sync after releasing reset
 
     dut._log.info("Test project behavior")
 
-    # Expected sequence: RTL increments before driving uo_out,
-    # so the first observed value is 1 (not 0)
-    expected_sequence = [1, 2, 3, 4, 5, 0, 1, 2]
+    # Check the counter counts from 0 to 5 and wraps around
+    expected_sequence = [0, 1, 2, 3, 4, 5, 0, 1]
 
     for i, expected in enumerate(expected_sequence):
         await ClockCycles(dut.clk, 1)
-        actual = int(dut.uo_out.value) & 0b111  # Only use lower 3 bits
+        actual = dut.uo_out.value.integer & 0b111  # Only use lower 3 bits
         dut._log.info(f"Cycle {i}: uo_out = {actual}, expected = {expected}")
         assert actual == expected, f"Cycle {i}: Expected {expected}, got {actual}"

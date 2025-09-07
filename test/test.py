@@ -16,9 +16,9 @@ async def test_mod6_counter(dut):
     # Reset
     dut.ena.value = 1
     dut.rst_n.value = 0
-    await ClockCycles(dut.clk, 5)   # hold reset 5 cycles
+    await ClockCycles(dut.clk, 15)   # hold reset 15 cycles
     dut.rst_n.value = 1
-    await ClockCycles(dut.clk, 1)   # wait 1 cycle for counter to start
+    await ClockCycles(dut.clk, 2)   # wait 2 cycle for counter to start
 
     # Test counter for 2 full cycles (0-5)
     expected_sequence = [0,1,2,3,4,5,0,1,2,3,4,5]

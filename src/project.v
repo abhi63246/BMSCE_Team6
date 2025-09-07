@@ -5,31 +5,32 @@
 
 `default_nettype none
 
-module tt_um_mod6_counter (
-    input  wire       clk,      // Clock
-    input  wire       rst_n,    // Active-low reset
-    input  wire       ena,      // Enable (always 1, can ignore)
-    input  wire [7:0] ui_in,   // Not used in this counter
-    input  wire [7:0] uio_in,  // Not used in this counter
-    output wire [7:0] uo_out,  // 3-bit counter in lower bits
-    output wire [7:0] uio_out, // Not used
-    output wire [7:0] uio_oe   // Not used
+module tt_um_example (
+    input  wire       clk,      // clock
+    input  wire       rst_n,    // active low reset
+    input  wire       ena,      // enable (always high)
+    input  wire [7:0] ui_in,    // dedicated input
+    input  wire [7:0] uio_in,   // IO input path
+    output reg  [7:0] uo_out,   // dedicated output
+    output reg  [7:0] uio_out,  // IO output path
+    output reg  [7:0] uio_oe    // IO output enable
 );
 
-  // 3-bit counter register
+  // Example: Mod-6 counter stored in uo_out
   reg [2:0] counter;
 
-  // Sequential logic: counts from 0 to 5 and wraps around
   always @(posedge clk or negedge rst_n) begin
-    if (!rst_n)
-      counter <= 3'b000;  // Reset counter to 0
-    else
-      counter <= (counter == 3'd5) ? 3'b000 : counter + 1;
+    if (!rst_n) begin
+      counter <= 3'd0;   // reset counter to 0
+      uo_out  <= 8'd0;   // reset output
+      uio_out <= 8'd0;
+      uio_oe  <= 8'd0;
+    end else begin
+      counter <= (counter == 3'd5) ? 3'd0 : counter + 1;
+      uo_out  <= counter;
+      uio_out <= 8'd0;
+      uio_oe  <= 8'd0;
+    end
   end
-
-  // Assign outputs
-  assign uo_out  = {5'b0, counter}; // Only lower 3 bits used
-  assign uio_out = 8'b0;
-  assign uio_oe  = 8'b0;
 
 endmodule

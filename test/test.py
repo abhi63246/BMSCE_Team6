@@ -7,34 +7,30 @@ from cocotb.triggers import ClockCycles
 
 
 @cocotb.test()
-async def test_project(dut):
-    dut._log.info("Start")
+async def test_mod6_counter(dut):
+    dut._log.info("Starting Mod-6 counter test")
 
-    # Set the clock period to 10 us (100 KHz)
+    # Start the clock: 10 us period (100 KHz)
     clock = Clock(dut.clk, 10, units="us")
     cocotb.start_soon(clock.start())
 
-    # Reset
-    dut._log.info("Reset")
+    # Initialize signals
     dut.ena.value = 1
     dut.ui_in.value = 0
     dut.uio_in.value = 0
     dut.rst_n.value = 0
+
+    # Hold reset for 10 clock cycles
     await ClockCycles(dut.clk, 10)
     dut.rst_n.value = 1
 
-    dut._log.info("Test project behavior")
+    dut._log.info("Testing counting behavior")
 
-    # Set the input values you want to test
-    dut.ui_in.value = 20
-    dut.uio_in.value = 30
+    # Expected sequence for Mod-6 counter: 0 -> 1 -> 2 -> 3 -> 4 -> 5 -> 0 -> 1 ...
+    expected_sequence = [0, 1, 2, 3, 4, 5, 0, 1]
 
-    # Wait for one clock cycle to see the output values
-    await ClockCycles(dut.clk, 1)
-
-    # The following assersion is just an example of how to check the output values.
-    # Change it to match the actual expected output of your module:
-    assert dut.uo_out.value == 50
-
-    # Keep testing the module by changing the input values, waiting for
-    # one or more clock cycles, and asserting the expected output values.
+    for i, expected in enumerate(expected_sequence):
+        await ClockCycles(dut.clk, 1)
+        actual = dut.uo_out.value.integer & 0b111  # Only lower 3 bits are counter
+        dut._log.info(f"Cycle {i}: uo_out = {actual}, expected = {expected}")
+        assert actual == expected, f"Cycle {i}: Expected {expected}, got {actual}"

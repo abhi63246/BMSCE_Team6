@@ -19,9 +19,14 @@ module tt_um_mod6_counter (
       uo_out  <= 8'd0;
       uio_out <= 8'd0;
       uio_oe  <= 8'd0;
-    end else begin
-      counter <= (counter == 3'd5) ? 3'd0 : counter + 1;
-      uo_out  <= counter;
+    end else if (ena) begin
+      if (counter == 3'd5) begin
+        counter <= 3'd0;
+        uo_out  <= 8'd0;
+      end else begin
+        counter <= counter + 3'd1;
+        uo_out  <= counter + 3'd1;   // ✅ use next value
+      end
       uio_out <= 8'd0;
       uio_oe  <= 8'd0;
     end

@@ -1,11 +1,6 @@
-/*
- * Copyright (c) 2024 Your Name
- * SPDX-License-Identifier: Apache-2.0
- */
-
 `default_nettype none
 
-module tt_um_example (
+module tt_um_mod6_counter (
     input  wire       clk,      // clock
     input  wire       rst_n,    // active low reset
     input  wire       ena,      // enable (always high)
@@ -16,13 +11,12 @@ module tt_um_example (
     output reg  [7:0] uio_oe    // IO output enable
 );
 
-  // Example: Mod-6 counter stored in uo_out
   reg [2:0] counter;
 
   always @(posedge clk or negedge rst_n) begin
     if (!rst_n) begin
-      counter <= 3'd0;   // reset counter to 0
-      uo_out  <= 8'd0;   // reset output
+      counter <= 3'd0;
+      uo_out  <= 8'd0;
       uio_out <= 8'd0;
       uio_oe  <= 8'd0;
     end else begin

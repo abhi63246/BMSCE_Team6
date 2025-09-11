@@ -95,3 +95,13 @@ The GitHub action automatically builds the ASIC files using [OpenLane](https://w
   - LinkedIn [#tinytapeout](https://www.linkedin.com/search/results/content/?keywords=%23tinytapeout) [@TinyTapeout](https://www.linkedin.com/company/100708654/)  
   - Mastodon [#tinytapeout](https://chaos.social/tags/tinytapeout) [@matthewvenn](https://chaos.social/@matthewvenn)  
   - X (formerly Twitter) [#tinytapeout](https://twitter.com/hashtag/tinytapeout) [@tinytapeout](https://twitter.com/tinytapeout)
+
+## Credits & Acknowledgments
+
+This project was developed as part of the **BMSCE_Team6** Tiny Tapeout team effort.  
+
+Special thanks and acknowledgments to:  
+ - Dr.Camilo Vélez Cuervo , IEEE Electron Devices Society (EDS)
+ - Prof. Dr. R. Jaya Gowri, BMS College of Engineering
+ - Matt Venn , Tiny Tapeout
+ - G S Bharath , Instructor

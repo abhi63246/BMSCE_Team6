@@ -5,7 +5,7 @@ project:
   discord:      ""                     # Optional Discord username
   description:  "A 3-bit Mod-6 synchronous counter"  # One line description of what your project does
   language:     "Verilog"              # HDL used
-  clock_hz:     1000                # 1 KHz clock input
+  clock_hz:     100                # 100 Hz clock input
 
   # How many tiles your design occupies? A single tile is about 167x108 uM.
   tiles: "1x1"                          # Keep at 1x1 unless your design is larger

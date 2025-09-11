@@ -19,7 +19,7 @@ module tt_um_mod6_counter (
   // 3-bit Mod-6 counter (counts 0 to 5)
   reg [2:0] counter;
 
-  always @(posedge clk) begin
+    always @(posedge clk or negedge rst_n) begin
     if (!rst_n)
       counter <= 3'd0;                    // Async reset (active low)
     else if (counter == 3'd5)

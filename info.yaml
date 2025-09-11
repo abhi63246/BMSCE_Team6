@@ -1,7 +1,7 @@
 # Tiny Tapeout project information
 project:
   title:        "Mod-6 Counter"        # Project title
-  author:       "Sara"                 # Your name
+  author:       "BMSCE_T06"                 # Your name
   discord:      ""                     # Optional Discord username
   description:  "A 3-bit Mod-6 synchronous counter"  # One line description of what your project does
   language:     "Verilog"              # HDL used
